@@ -39,11 +39,12 @@ namespace WpfChangePageTest
         private void ToPage01(object obj)
         {
             //IntPtr hwnd = new WindowInteropHelper(this).Handle; //this就是要获取句柄的窗体的类名；
+            //IntPtr hwnd = ((HwndSource)PresentationSource.FromVisual(page)).Handle;//uielement就是要获取句柄的控件，该控
             var type = typeof(Page01);
             if(!pages.ContainsKey(type))
             {
                 var page = new Page01();
-                IntPtr hwnd = ((HwndSource)PresentationSource.FromVisual(page)).Handle;//uielement就是要获取句柄的控件，该控
+                
                 pages.Add(type, page);
             }
             CurrentPage = pages[type];
