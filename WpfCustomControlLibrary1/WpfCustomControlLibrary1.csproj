@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5AFAE9DD-49DC-4D78-B0B3-4835666AA91A}</ProjectGuid>
+    <ProjectGuid>{2806D215-930E-4808-B22D-B26A69F7FDF2}</ProjectGuid>
     <OutputType>library</OutputType>
-    <RootNamespace>WpfChangePageTest</RootNamespace>
-    <AssemblyName>WpfChangePageTest</AssemblyName>
+    <RootNamespace>WpfCustomControlLibrary1</RootNamespace>
+    <AssemblyName>WpfCustomControlLibrary1</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -48,8 +48,20 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mvvm\KDelegateCommand.cs" />
-    <Compile Include="Mvvm\KNotifyPropertyBase.cs" />
+    <Compile Include="Styles\VisiColorKeys.cs" />
+    <Page Include="Styles\VisiColor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="CustomControl1.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -63,18 +75,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ViewModels\Page01ViewModel.cs" />
-    <Compile Include="ViewModels\Page02ViewModel.cs" />
-    <Compile Include="Views\Page01.xaml.cs">
-      <DependentUpon>Page01.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Page02.xaml.cs">
-      <DependentUpon>Page02.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows1.xaml.cs">
-      <DependentUpon>Windows1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WindowViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -83,26 +83,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Page01.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Page02.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WpfCustomControlLibrary1\WpfCustomControlLibrary1.csproj">
-      <Project>{2806d215-930e-4808-b22d-b26a69f7fdf2}</Project>
-      <Name>WpfCustomControlLibrary1</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -57,6 +57,10 @@
       <Project>{5afae9dd-49dc-4d78-b0b3-4835666aa91a}</Project>
       <Name>WpfChangePageTest</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WpfCustomControlLibrary1\WpfCustomControlLibrary1.csproj">
+      <Project>{2806d215-930e-4808-b22d-b26a69f7fdf2}</Project>
+      <Name>WpfCustomControlLibrary1</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
