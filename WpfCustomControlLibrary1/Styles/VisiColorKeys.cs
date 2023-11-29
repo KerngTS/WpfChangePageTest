@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace WpfCustomControlLibrary1.Styles
 {
-    internal class VisiColorKeys
+    public class VisiColorKeys
     {
         public const string BackgroundColor = "background color";
         public const string TextColor = "text color";
