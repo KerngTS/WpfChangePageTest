@@ -153,7 +153,8 @@
         </Border>
     </Grid>-->
 
-    <DataGrid
+    <!--<DataGrid
+        Visibility="Collapsed"
         Margin="5"
         AutoGenerateColumns="False"
         CanUserAddRows="False"
@@ -221,5 +222,25 @@
 
             </DataGridTemplateColumn>
         </DataGrid.Columns>
-    </DataGrid>
+    </DataGrid>-->
+
+    <cc:VDrawerHost IsLeftDrawerOpen="{Binding IsLeftOpen,Mode=TwoWay}" IsRightDrawerOpen="{Binding IsRightOpen,Mode=TwoWay}">
+        <cc:VDrawerHost.Content>
+            <StackPanel Orientation="Horizontal" Width="100">
+                <Button Content="左" Height="22" Width="50" Command="{Binding LeftCommand}"/>
+                <Button Content="右" Height="22" Width="50" Command="{Binding RightCommand}"/>
+            </StackPanel>
+        </cc:VDrawerHost.Content>
+        <cc:VDrawerHost.LeftDrawer>
+            <StackPanel Width="100" Background="Blue">
+                <TextBlock Text="Left Drawer" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
+        </cc:VDrawerHost.LeftDrawer>
+
+        <cc:VDrawerHost.RightDrawer>
+            <StackPanel Width="100" Background="Yellow">
+                <TextBlock Text="Right Drawer" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
+        </cc:VDrawerHost.RightDrawer>
+    </cc:VDrawerHost>
 </cc:VWindow>

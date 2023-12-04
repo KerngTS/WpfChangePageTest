@@ -1,13 +1,15 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:WpfCustomControlLibrary1">
+    xmlns:converter="clr-namespace:WpfCustomControlLibrary1.Converters"
+    xmlns:local="clr-namespace:WpfCustomControlLibrary1"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <ResourceDictionary.MergedDictionaries>
         <!--<ResourceDictionary Source="../Styles/VisiColor.xaml"/>-->
         <ResourceDictionary Source="pack://application:,,,/WpfCustomControlLibrary1;component/Styles/VisiColor.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfCustomControlLibrary1;component/Styles/ControlStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
+    <converter:VDrawerMarginOffsetConverter x:Key="DrawerMarginConverter" />
 
     <Style TargetType="{x:Type local:VWindow}">
         <Setter Property="WindowChrome.WindowChrome">
@@ -67,6 +69,233 @@
                             </AdornerDecorator>
                         </Grid>
                     </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:VDrawerHost}">
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:VDrawerHost}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <!--  Main  -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <!--  Content  -->
+                            <Border
+                                x:Name="ContentPresenter"
+                                Grid.Row="0"
+                                Grid.RowSpan="3"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                Panel.ZIndex="0">
+                                <ContentPresenter Content="{TemplateBinding Content}">
+                                    <ContentPresenter.Tag>
+                                        <system:Boolean>False</system:Boolean>
+                                    </ContentPresenter.Tag>
+                                </ContentPresenter>
+                            </Border>
+                            <!--  Mask  -->
+                            <Border
+                                x:Name="PART_DrawerMask"
+                                Grid.Row="0"
+                                Grid.RowSpan="3"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                Panel.ZIndex="1"
+                                Background="Gray"
+                                Focusable="False"
+                                IsHitTestVisible="False"
+                                Opacity="0">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers>
+                                            <Trigger Property="Opacity" Value="0">
+                                                <Setter Property="Visibility" Value="Hidden" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                            <!--  LeftDrawer  -->
+                            <Border
+                                x:Name="PART_LeftDrawer"
+                                Grid.Row="0"
+                                Grid.RowSpan="3"
+                                Grid.Column="0"
+                                Margin="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth, Converter={StaticResource DrawerMarginConverter}, ConverterParameter={x:Static Dock.Left}}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Stretch"
+                                Panel.ZIndex="2"
+                                Background="{TemplateBinding Background}"
+                                Opacity="0">
+                                <ContentPresenter Content="{TemplateBinding LeftDrawer}" />
+
+                            </Border>
+                            <!--  RightDrawer  -->
+                            <Border
+                                x:Name="PART_RightDrawer"
+                                Grid.Row="0"
+                                Grid.RowSpan="3"
+                                Grid.Column="2"
+                                Margin="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth, Converter={StaticResource DrawerMarginConverter}, ConverterParameter={x:Static Dock.Right}}"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Stretch"
+                                Panel.ZIndex="2"
+                                Opacity="0"
+                                Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding RightDrawer}" />
+
+                            </Border>
+                            <!--  TopDrawer  -->
+                            <Border
+                                x:Name="PART_TopDrawer"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                Margin="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth, Converter={StaticResource DrawerMarginConverter}, ConverterParameter={x:Static Dock.Top}}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                Panel.ZIndex="2"
+                                Opacity="0"
+                                Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding TopDrawer}" />
+                            </Border>
+                            <!--  BottomDrawer  -->
+                            <Border
+                                x:Name="PART_BottomDrawer"
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                Margin="{Binding RelativeSource={RelativeSource Self}, Path=ActualWidth, Converter={StaticResource DrawerMarginConverter}, ConverterParameter={x:Static Dock.Bottom}}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Bottom"
+                                Panel.ZIndex="2"
+                                Opacity="0"
+                                Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding BottomDrawer}" />
+                            </Border>
+                        </Grid>
+                        <!--  VisualState  -->
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="LeftDrawerViewStates">
+                                <VisualStateGroup.Transitions>
+                                    <!--  Left  -->
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="LeftDrawerOpen">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_DrawerMask"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To=".56"
+                                            Duration="0" />
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PART_DrawerMask" Storyboard.TargetProperty="IsHitTestVisible">
+                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="True" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                        <!--<BooleanAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Tag">
+                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="False" />
+                                        </BooleanAnimationUsingKeyFrames>-->
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_LeftDrawer"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0"
+                                            To="1"
+                                            Duration="0:0:0.2" />
+                                        <ThicknessAnimation
+                                            Storyboard.TargetName="PART_LeftDrawer"
+                                            Storyboard.TargetProperty="Margin"
+                                            To="0"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="LeftDrawerClosed">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_DrawerMask"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0" />
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PART_DrawerMask" Storyboard.TargetProperty="IsHitTestVisible">
+                                            <DiscreteBooleanKeyFrame Value="False" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_LeftDrawer"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1"
+                                            To="0"
+                                            Duration="0:0:0.2" />
+                                        <ThicknessAnimation
+                                            Storyboard.TargetName="PART_LeftDrawer"
+                                            Storyboard.TargetProperty="Margin"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </VisualState>
+
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="RightDrawerViewStates">
+                                <VisualStateGroup.Transitions>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="RightDrawerOpen">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_DrawerMask"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To=".56"
+                                            Duration="0" />
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PART_DrawerMask" Storyboard.TargetProperty="IsHitTestVisible">
+                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="True" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_RightDrawer"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0"
+                                            To="1"
+                                            Duration="0:0:0.2" />
+                                        <ThicknessAnimation
+                                            Storyboard.TargetName="PART_RightDrawer"
+                                            Storyboard.TargetProperty="Margin"
+                                            To="0"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="RightDrawerClosed">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_DrawerMask"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0" />
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PART_DrawerMask" Storyboard.TargetProperty="IsHitTestVisible">
+                                            <DiscreteBooleanKeyFrame Value="False" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_RightDrawer"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1"
+                                            To="0"
+                                            Duration="0:0:0.2" />
+                                        <ThicknessAnimation
+                                            Storyboard.TargetName="PART_RightDrawer"
+                                            Storyboard.TargetProperty="Margin"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </VisualState>
+
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -13,6 +13,18 @@ namespace WpfChangePageTest
 {
     internal class WindowViewModel:KNotifyPropertyBase
     {
+        private bool _isLeftOpen;
+        public bool IsLeftOpen
+        {
+            get { return _isLeftOpen; }
+            set { _isLeftOpen = value; RaisePropertyChange();Console.WriteLine(IsLeftOpen); }
+        }
+        private bool _isRightOpen;
+        public bool IsRightOpen
+        {
+            get { return _isRightOpen; }
+            set { _isRightOpen = value; RaisePropertyChange(); }
+        }
         private string _curPageName = "NONE";
         public string CurPageName
         {
@@ -37,10 +49,15 @@ namespace WpfChangePageTest
         public KDelegateCommand Page01Command { get;private set; }
         public KDelegateCommand Page02Command { get;private set; }
 
+        public KDelegateCommand LeftCommand { get;private set; }
+        public KDelegateCommand RightCommand { get;private set; }
+
         public WindowViewModel()
         {
             Page01Command = new KDelegateCommand(ToPage01);
             Page02Command = new KDelegateCommand(ToPage02);
+            LeftCommand=new KDelegateCommand(LeftOpen);
+            RightCommand = new KDelegateCommand(RightOpen);
             ColorValues = new List<ColorValue>();
             var cfg = new Cfg();
             ColorValues.Add(cfg.BackgroundColor);
@@ -48,6 +65,16 @@ namespace WpfChangePageTest
             ColorValues.Add(cfg.SbTextColor);
             ColorValues.Add(cfg.UiLinesColor);
             ColorValues.Add(cfg.SbBackgroundColor);
+        }
+
+        private void RightOpen(object obj)
+        {
+            IsRightOpen = true;
+        }
+
+        private void LeftOpen(object obj)
+        {
+            IsLeftOpen = true;
         }
 
         private void ToPage01(object obj)

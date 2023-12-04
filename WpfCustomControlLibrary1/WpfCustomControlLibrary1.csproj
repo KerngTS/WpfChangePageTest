@@ -48,7 +48,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\VDrawerMarginOffsetConverter.cs" />
     <Compile Include="Styles\VisiColorKeys.cs" />
+    <Compile Include="VDrawerHost.cs" />
     <Compile Include="VWindow.cs" />
     <Page Include="Styles\ControlStyles.xaml">
       <SubType>Designer</SubType>
