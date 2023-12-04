@@ -27,6 +27,13 @@ namespace WpfChangePageTest
             set { _currentPage = value; RaisePropertyChange(); }
         }
 
+        private List<ColorValue> colorValues;
+        public List<ColorValue> ColorValues
+        {
+            get { return colorValues; }
+            set { colorValues = value;RaisePropertyChange(); }
+        }
+
         public KDelegateCommand Page01Command { get;private set; }
         public KDelegateCommand Page02Command { get;private set; }
 
@@ -34,6 +41,13 @@ namespace WpfChangePageTest
         {
             Page01Command = new KDelegateCommand(ToPage01);
             Page02Command = new KDelegateCommand(ToPage02);
+            ColorValues = new List<ColorValue>();
+            var cfg = new Cfg();
+            ColorValues.Add(cfg.BackgroundColor);
+            ColorValues.Add(cfg.TextColor);
+            ColorValues.Add(cfg.SbTextColor);
+            ColorValues.Add(cfg.UiLinesColor);
+            ColorValues.Add(cfg.SbBackgroundColor);
         }
 
         private void ToPage01(object obj)
