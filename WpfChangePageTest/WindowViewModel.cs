@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
+using WpfChangePageTest.Dialog;
 using WpfChangePageTest.Mvvm;
 using WpfChangePageTest.Views;
 
@@ -51,9 +52,11 @@ namespace WpfChangePageTest
 
         public KDelegateCommand LeftCommand { get;private set; }
         public KDelegateCommand RightCommand { get;private set; }
+        public KDelegateCommand DialogCommand { get;private set; }
 
         public WindowViewModel()
         {
+            DialogCommand = new KDelegateCommand(Dialog);
             Page01Command = new KDelegateCommand(ToPage01);
             Page02Command = new KDelegateCommand(ToPage02);
             LeftCommand=new KDelegateCommand(LeftOpen);
@@ -65,6 +68,19 @@ namespace WpfChangePageTest
             ColorValues.Add(cfg.SbTextColor);
             ColorValues.Add(cfg.UiLinesColor);
             ColorValues.Add(cfg.SbBackgroundColor);
+        }
+
+        private void Dialog(object obj)
+        {
+            IDialogService dlgService = new DialogService();
+            IDialogParameters parameters = new DialogParameters();
+            parameters.Add("title", "DialogTitle");
+            parameters.Add("content", "DialogContent");
+            var res = dlgService.ShowDialog(typeof(TestDialogView), parameters, "");
+            if (res.Result == DialogStatus.OK)
+                MessageBox.Show(res.Parameters.GetValue<string>("newTitle") + "\n" + res.Parameters.GetValue<string>("newContent"));
+            else
+                MessageBox.Show(res.Result.ToString());
         }
 
         private void RightOpen(object obj)

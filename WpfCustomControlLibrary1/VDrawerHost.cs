@@ -176,7 +176,7 @@ namespace WpfCustomControlLibrary1
 
         // Using a DependencyProperty as the backing store for IsLeftDrawerOpen.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsLeftDrawerOpenProperty =
-            DependencyProperty.Register("IsLeftDrawerOpen", typeof(bool), typeof(VDrawerHost), new FrameworkPropertyMetadata(false,new PropertyChangedCallback(OpenPropertyChangedCallback)));
+            DependencyProperty.Register("IsLeftDrawerOpen", typeof(bool), typeof(VDrawerHost), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OpenPropertyChangedCallback)));
 
         private static void OpenPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -195,7 +195,7 @@ namespace WpfCustomControlLibrary1
 
         // Using a DependencyProperty as the backing store for IsRightDrawerOpen.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsRightDrawerOpenProperty =
-            DependencyProperty.Register("IsRightDrawerOpen", typeof(bool), typeof(VDrawerHost), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OpenPropertyChangedCallback)));
+            DependencyProperty.Register("IsRightDrawerOpen", typeof(bool), typeof(VDrawerHost), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OpenPropertyChangedCallback)));
 
 
 
@@ -207,7 +207,7 @@ namespace WpfCustomControlLibrary1
 
         // Using a DependencyProperty as the backing store for IsTopDrawerOpen.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsTopDrawerOpenProperty =
-            DependencyProperty.Register("IsTopDrawerOpen", typeof(bool), typeof(VDrawerHost), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OpenPropertyChangedCallback)));
+            DependencyProperty.Register("IsTopDrawerOpen", typeof(bool), typeof(VDrawerHost), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OpenPropertyChangedCallback)));
 
 
 
@@ -219,7 +219,7 @@ namespace WpfCustomControlLibrary1
 
         // Using a DependencyProperty as the backing store for IsBottomDrawerOpen.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsBottomDrawerOpenProperty =
-            DependencyProperty.Register("IsBottomDrawerOpen", typeof(bool), typeof(VDrawerHost), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OpenPropertyChangedCallback)));
+            DependencyProperty.Register("IsBottomDrawerOpen", typeof(bool), typeof(VDrawerHost), new FrameworkPropertyMetadata(false,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OpenPropertyChangedCallback)));
 
 
         #endregion

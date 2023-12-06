@@ -154,8 +154,8 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Stretch"
                                 Panel.ZIndex="2"
-                                Opacity="0"
-                                Background="{TemplateBinding Background}">
+                                Background="{TemplateBinding Background}"
+                                Opacity="0">
                                 <ContentPresenter Content="{TemplateBinding RightDrawer}" />
 
                             </Border>
@@ -169,8 +169,8 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
                                 Panel.ZIndex="2"
-                                Opacity="0"
-                                Background="{TemplateBinding Background}">
+                                Background="{TemplateBinding Background}"
+                                Opacity="0">
                                 <ContentPresenter Content="{TemplateBinding TopDrawer}" />
                             </Border>
                             <!--  BottomDrawer  -->
@@ -183,8 +183,8 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Bottom"
                                 Panel.ZIndex="2"
-                                Opacity="0"
-                                Background="{TemplateBinding Background}">
+                                Background="{TemplateBinding Background}"
+                                Opacity="0">
                                 <ContentPresenter Content="{TemplateBinding BottomDrawer}" />
                             </Border>
                         </Grid>
@@ -245,8 +245,7 @@
                             </VisualStateGroup>
 
                             <VisualStateGroup x:Name="RightDrawerViewStates">
-                                <VisualStateGroup.Transitions>
-                                </VisualStateGroup.Transitions>
+                                <VisualStateGroup.Transitions />
                                 <VisualState x:Name="RightDrawerOpen">
                                     <Storyboard>
                                         <DoubleAnimation
@@ -296,6 +295,115 @@
                         </VisualStateManager.VisualStateGroups>
                     </Border>
 
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:VDialogHost}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:VDialogHost}">
+                    <Grid x:Name="DialogHostRoot" Focusable="False">
+                        <Grid x:Name="PART_Dialog">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform x:Name="GridScaleTransform" ScaleX="0" ScaleY="0" />
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <Border
+                                x:Name="PART_ContentElement"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                IsHitTestVisible="True">
+
+                                <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Content}" />
+                            </Border>
+                        </Grid>
+
+                        <Grid
+                            x:Name="PART_MaskCover"
+                            Background="Transparent"
+                            Focusable="False"
+                            IsHitTestVisible="False"
+                            Visibility="{Binding ElementName=ContentCoverBorder, Path=Visibility}">
+                            <Grid.OpacityMask>
+                                <VisualBrush Visual="{x:Reference ContentCoverBorder}" />
+                            </Grid.OpacityMask>
+                            
+                            <Border
+                                x:Name="ContentCoverBorder"
+                                Background="Gray"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                IsHitTestVisible="False"
+                                Opacity="0">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers>
+                                            <Trigger Property="Opacity" Value="0">
+                                                <Setter Property="Visibility" Value="Hidden" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                        </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="DialogStates">
+                                <VisualState x:Name="Open">
+                                    <Storyboard>
+                                        <BooleanAnimationUsingKeyFrames
+                                            Storyboard.TargetName="PART_Dialog"
+                                            Storyboard.TargetProperty="IsOpen"
+                                            Duration="0">
+                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="True" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ContentCoverBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To=".56"
+                                            Duration="0" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_ContentElement"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="GridScaleTransform"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="1"
+                                            Duration="0" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="GridScaleTransform"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="1"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Closed">
+                                    <Storyboard>
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PART_Popup" Storyboard.TargetProperty="IsOpen">
+                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="False" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ContentCoverBorder"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsOpen" Value="True">
+                            <Setter TargetName="PART_MaskCover" Property="IsHitTestVisible" Value="True" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
