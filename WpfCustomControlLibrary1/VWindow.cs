@@ -44,6 +44,7 @@ namespace WpfCustomControlLibrary1
     ///     <MyNamespace:VWindow/>
     ///
     /// </summary>
+    
     public class VWindow : Window
     {
         static VWindow()
@@ -54,9 +55,107 @@ namespace WpfCustomControlLibrary1
         public VWindow()
         {
             CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand, (s, e) => { SystemCommands.CloseWindow(this); }));
+            CommandBindings.Add(new CommandBinding(OpenDialogCommand, OpenDialogHandler));
+            CommandBindings.Add(new CommandBinding(CloseDialogCommand, CloseDialogHandler, CloseDialogCanExecute));
         }
 
+        #region MD DialogHost
 
+        
+        private void CloseDialogCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            
+        }
+
+        private void CloseDialogHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+           
+        }
+
+        private void OpenDialogHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        public static readonly RoutedEvent DialogOpenedEvent =
+            EventManager.RegisterRoutedEvent(
+                "DialogOpened",
+                RoutingStrategy.Bubble,
+                typeof(DialogOpenedEventHandler),
+                typeof(VWindow));
+
+        
+        public event DialogOpenedEventHandler DialogOpened
+        {
+            add { AddHandler(DialogOpenedEvent, value); }
+            remove { RemoveHandler(DialogOpenedEvent, value); }
+        }
+
+        public static readonly DependencyProperty DialogOpenedCallbackProperty = DependencyProperty.Register(
+            nameof(DialogOpenedCallback), typeof(DialogOpenedEventHandler), typeof(VWindow), new PropertyMetadata(default(DialogOpenedEventHandler)));
+
+        public DialogOpenedEventHandler DialogOpenedCallback
+        {
+            get => (DialogOpenedEventHandler)GetValue(DialogOpenedCallbackProperty);
+            set => SetValue(DialogOpenedCallbackProperty, value);
+        }
+
+        protected void OnDialogOpened(DialogOpenedEventArgs eventArgs)
+            => RaiseEvent(eventArgs);
+
+        public static readonly RoutedEvent DialogClosingEvent =
+            EventManager.RegisterRoutedEvent(
+                "DialogClosing",
+                RoutingStrategy.Bubble,
+                typeof(DialogClosingEventHandler),
+                typeof(VWindow));
+
+        public event DialogClosingEventHandler DialogClosing
+        {
+            add { AddHandler(DialogClosingEvent, value); }
+            remove { RemoveHandler(DialogClosingEvent, value); }
+        }
+
+        public static readonly DependencyProperty DialogClosingCallbackProperty = DependencyProperty.Register(
+            nameof(DialogClosingCallback), typeof(DialogClosingEventHandler), typeof(VWindow), new PropertyMetadata(default(DialogClosingEventHandler)));
+
+        public DialogClosingEventHandler DialogClosingCallback
+        {
+            get => (DialogClosingEventHandler)GetValue(DialogClosingCallbackProperty);
+            set => SetValue(DialogClosingCallbackProperty, value);
+        }
+
+        protected void OnDialogClosing(DialogClosingEventArgs eventArgs)
+            => RaiseEvent(eventArgs);
+
+        public static readonly RoutedEvent DialogClosedEvent =
+            EventManager.RegisterRoutedEvent(
+                "DialogClosed",
+                RoutingStrategy.Bubble,
+                typeof(DialogClosedEventHandler),
+                typeof(VWindow));
+
+        public event DialogClosedEventHandler DialogClosed
+        {
+            add { AddHandler(DialogClosedEvent, value); }
+            remove { RemoveHandler(DialogClosedEvent, value); }
+        }
+
+        public static readonly DependencyProperty DialogClosedCallbackProperty = DependencyProperty.Register(
+            nameof(DialogClosedCallback), typeof(DialogClosedEventHandler), typeof(VWindow), new PropertyMetadata(default(DialogClosedEventHandler)));
+
+        public DialogClosedEventHandler DialogClosedCallback
+        {
+            get => (DialogClosedEventHandler)GetValue(DialogClosedCallbackProperty);
+            set => SetValue(DialogClosedCallbackProperty, value);
+        }
+
+        protected void OnDialogClosed(DialogClosedEventArgs eventArgs)
+            => RaiseEvent(eventArgs);
+
+        public static readonly RoutedCommand OpenDialogCommand = new RoutedCommand();
+        public static readonly RoutedCommand CloseDialogCommand = new RoutedCommand();
+
+        #endregion
 
         public SolidColorBrush TitleBackgroundBrush
         {
@@ -82,4 +181,48 @@ namespace WpfCustomControlLibrary1
 
 
     }
+
+
+    public delegate void DialogOpenedEventHandler(object sender, DialogOpenedEventArgs eventArgs);
+    public delegate void DialogClosingEventHandler(object sender, DialogClosingEventArgs eventArgs);
+    public delegate void DialogClosedEventHandler(object sender, DialogClosedEventArgs eventArgs);
+
+    public class DialogOpenedEventArgs : RoutedEventArgs
+    {
+        public DialogOpenedEventArgs(RoutedEvent routedEvent)
+        {
+
+            RoutedEvent = routedEvent;
+        }
+
+    }
+
+    public class DialogClosedEventArgs : RoutedEventArgs
+    {
+        public DialogClosedEventArgs(object closeParameter, RoutedEvent routedEvent)
+            : base(routedEvent)
+        {
+            Parameter = closeParameter;
+        }
+
+        public object Parameter { get; private set; }
+
+    }
+
+    public class DialogClosingEventArgs : RoutedEventArgs
+    {
+        public DialogClosingEventArgs(object closeParameter, RoutedEvent routedEvent)
+            : base(routedEvent)
+        {
+            Parameter=closeParameter;
+        }
+
+        public void Cancel() => IsCancelled = true;
+
+        public bool IsCancelled { get; private set; }
+
+        public object Parameter { get; private set; }
+
+    }
+
 }

@@ -8,7 +8,7 @@ namespace WpfChangePageTest.Dialog
 {
     public class DialogParameters :  IDialogParameters
     {
-        private Dictionary<string,object> parameters;>
+        private Dictionary<string,object> parameters;
         public DialogParameters()
         {
             parameters = new Dictionary<string,object>();

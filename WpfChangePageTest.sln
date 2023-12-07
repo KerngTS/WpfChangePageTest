@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfCustomControlLibrary1", "WpfCustomControlLibrary1\WpfCustomControlLibrary1.csproj", "{2806D215-930E-4808-B22D-B26A69F7FDF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KIoc", "KIoc\KIoc.csproj", "{92361297-84E7-4358-B260-AA737E1A8D5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KIoc", "KIoc\KIoc.csproj", "{92361297-84E7-4358-B260-AA737E1A8D5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KEventAggregator", "KEventAggregator\KEventAggregator.csproj", "{9CAD9244-F5FB-4F16-A3DF-9F876284F771}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{92361297-84E7-4358-B260-AA737E1A8D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92361297-84E7-4358-B260-AA737E1A8D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92361297-84E7-4358-B260-AA737E1A8D5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CAD9244-F5FB-4F16-A3DF-9F876284F771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CAD9244-F5FB-4F16-A3DF-9F876284F771}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CAD9244-F5FB-4F16-A3DF-9F876284F771}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CAD9244-F5FB-4F16-A3DF-9F876284F771}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -115,6 +115,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KEventAggregator\KEventAggregator.csproj">
+      <Project>{9cad9244-f5fb-4f16-a3df-9f876284f771}</Project>
+      <Name>KEventAggregator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WpfCustomControlLibrary1\WpfCustomControlLibrary1.csproj">
       <Project>{2806d215-930e-4808-b22d-b26a69f7fdf2}</Project>
       <Name>WpfCustomControlLibrary1</Name>

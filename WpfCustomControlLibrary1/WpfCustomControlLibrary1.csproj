@@ -52,6 +52,7 @@
     <Compile Include="Converters\VDrawerMarginOffsetConverter.cs" />
     <Compile Include="Styles\VisiColorKeys.cs" />
     <Compile Include="VAnimationPath.cs" />
+    <Compile Include="VDialog.cs" />
     <Compile Include="VDialogHost.cs" />
     <Compile Include="VDrawerHost.cs" />
     <Compile Include="VWindow.cs" />

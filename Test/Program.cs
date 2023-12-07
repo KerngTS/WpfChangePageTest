@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KEventAggregator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,9 @@ namespace Test
         [STAThread]
         static void Main(string[] args)
         {
+            KEventAggregator.KEventAggregator1.Instance.Subscribe<TestEvent>(arg => Console.WriteLine($"HasFilter:{DateTime.Now:yyyy-MM-dd hh:mm:ss} {arg.Message}"),f=>f.Filter=="ROOT") ;
+            var token = KEventAggregator.KEventAggregator1.Instance.Subscribe<TestEvent>(arg => Console.WriteLine($"NoFilter:{DateTime.Now:yyyy-MM-dd hh:mm:ss} {arg.Message}")) ;
+            KEventAggregator.KEventAggregator1.Instance.UnSubscribe<TestEvent>(token);
             var win = new Windows1();
             var cfg = new Cfg();
             var r = win.Resources;

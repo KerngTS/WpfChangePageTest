@@ -53,6 +53,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KEventAggregator\KEventAggregator.csproj">
+      <Project>{9cad9244-f5fb-4f16-a3df-9f876284f771}</Project>
+      <Name>KEventAggregator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WpfChangePageTest\WpfChangePageTest.csproj">
       <Project>{5afae9dd-49dc-4d78-b0b3-4835666aa91a}</Project>
       <Name>WpfChangePageTest</Name>

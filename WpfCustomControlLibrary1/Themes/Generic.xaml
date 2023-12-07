@@ -334,7 +334,7 @@
                             <Grid.OpacityMask>
                                 <VisualBrush Visual="{x:Reference ContentCoverBorder}" />
                             </Grid.OpacityMask>
-                            
+
                             <Border
                                 x:Name="ContentCoverBorder"
                                 Background="Gray"
@@ -408,4 +408,6 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    
 </ResourceDictionary>

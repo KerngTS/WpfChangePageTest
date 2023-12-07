@@ -35,6 +35,7 @@ namespace WpfChangePageTest.Dialog
                 result = viewModel.Result;
             };
             var res = dialogWindow.ShowDialog();
+            
             //result= viewModel.Result;
             return result;
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KEventAggregator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -85,12 +86,16 @@ namespace WpfChangePageTest
 
         private void RightOpen(object obj)
         {
-            IsRightOpen = true;
+            //IsRightOpen = true;
+            KEventAggregator.KEventAggregator1.Instance.Publish<TestEvent>(new TestEvent { Filter = "ROOT", Message = "ROOTRightOpen!" });
+            KEventAggregator.KEventAggregator1.Instance.Publish<TestEvent>(new TestEvent { Filter = "CHILD", Message = "CHILDRightOpen!" });
         }
 
         private void LeftOpen(object obj)
         {
-            IsLeftOpen = true;
+            //IsLeftOpen = true;
+            KEventAggregator.KEventAggregator1.Instance.Publish<TestEvent>(new TestEvent { Filter = "ROOT", Message = "ROOTLEFTtOpen!" });
+            KEventAggregator.KEventAggregator1.Instance.Publish<TestEvent>(new TestEvent { Filter = "CHILD", Message = "CHILDLEFTOpen!" });
         }
 
         private void ToPage01(object obj)
