@@ -5,6 +5,7 @@
     xmlns:cc="clr-namespace:WpfCustomControlLibrary1;assembly=WpfCustomControlLibrary1"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WpfChangePageTest"
+    xmlns:role="clr-namespace:WpfCustomControlLibrary1.KValidationRules;assembly=WpfCustomControlLibrary1"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Windows1"
     Width="800"
@@ -230,14 +231,18 @@
     <cc:VDrawerHost IsLeftDrawerOpen="{Binding IsLeftOpen}" IsRightDrawerOpen="{Binding IsRightOpen}">
         <cc:VDrawerHost.Content>
             <Grid>
-                <cc:VAnimationPath
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!--<cc:VAnimationPath
                     Data="M 0 0 L 80 0 Q 80 0 80 0 L 80 120 Q 80 120 80 120 L 190 0 Q 190 0 190 0 L 300 0 Q 300 0 300 0 L 140 160 Q 140 160 140 160 L 300 290 Q 300 290 300 290 L 170 290 Q 170 290 170 290 L 80 200 Q 80 200 80 200 L 80 290 Q 80 290 80 290 L 0 290 Q 0 290 0 290 L 0 0"
                     IsPlaying="False"
                     PathLength="0"
                     Stretch="Uniform"
                     Stroke="Blue"
                     StrokeThickness="6"
-                    Duration="00:00:05" />
+                    Duration="00:00:05" />-->
                 <StackPanel Width="200" Orientation="Horizontal">
                     <Button
                         Width="50"
@@ -256,6 +261,45 @@
                         Content="ShowDialog" />
 
                 </StackPanel>
+
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="測試復制" Margin="5">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu>
+                                            <MenuItem Header="Copy" Command="Copy"/>
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBox Margin="5">
+                        <TextBox.Text>
+                            <Binding Path="RoleMessage1">
+                                <Binding.ValidationRules>
+                                    <role:RegexValidationRule AllowEmpty="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <TextBox Margin="5">
+                        <TextBox.Text>
+                            <Binding Path="RoleMessage2">
+                                <Binding.ValidationRules>
+                                    <role:RegexValidationRule AllowEmpty="False" Pattern="^\d{2}$"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+                
+
+
+
             </Grid>
 
         </cc:VDrawerHost.Content>

@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="AttachPropertys\DialogCloseHelper.cs" />
     <Compile Include="Converters\VDrawerMarginOffsetConverter.cs" />
+    <Compile Include="KValidationRules\RegexValidationRule.cs" />
     <Compile Include="Styles\VisiColorKeys.cs" />
     <Compile Include="VAnimationPath.cs" />
     <Compile Include="VDialog.cs" />

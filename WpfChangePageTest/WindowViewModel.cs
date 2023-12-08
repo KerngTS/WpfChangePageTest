@@ -34,6 +34,20 @@ namespace WpfChangePageTest
             set { _curPageName = value; RaisePropertyChange(); }
         }
 
+        private string _roleMessage;
+        public string RoleMessage1
+        {
+            get { return _roleMessage; }
+            set { _roleMessage = value; RaisePropertyChange(); }
+        }
+
+        private string _roleMessage2;
+        public string RoleMessage2
+        {
+            get { return _roleMessage2; }
+            set { _roleMessage2 = value; RaisePropertyChange(); }
+        }
+
         private UserControl _currentPage;
         public UserControl CurrentPage
         {
