@@ -52,11 +52,13 @@
     <Compile Include="Converters\VDrawerMarginOffsetConverter.cs" />
     <Compile Include="KFloatingTextBox.cs" />
     <Compile Include="KValidationRules\RegexValidationRule.cs" />
+    <Compile Include="KVisualHostBase.cs" />
     <Compile Include="Styles\VisiColorKeys.cs" />
     <Compile Include="VAnimationPath.cs" />
     <Compile Include="VDialog.cs" />
     <Compile Include="VDialogHost.cs" />
     <Compile Include="VDrawerHost.cs" />
+    <Compile Include="VVisualHost.cs" />
     <Compile Include="VWindow.cs" />
     <Page Include="Styles\ControlStyles.xaml">
       <SubType>Designer</SubType>
