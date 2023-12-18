@@ -58,6 +58,8 @@
     <Compile Include="VDialog.cs" />
     <Compile Include="VDialogHost.cs" />
     <Compile Include="VDrawerHost.cs" />
+    <Compile Include="VFixedScaleVisualHostBase.cs" />
+    <Compile Include="VPointArrayDrawerHost.cs" />
     <Compile Include="VVisualHost.cs" />
     <Compile Include="VWindow.cs" />
     <Page Include="Styles\ControlStyles.xaml">

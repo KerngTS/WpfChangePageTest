@@ -135,7 +135,16 @@
 
     </cc:VWindow.Resources>
     <Grid>
-        <cc:VVisualHost Width="400" Height="400"  Background="LightGray"/>
+        <!--<cc:VVisualHost Width="400" Height="400"  Background="LightGray"/>-->
+        <cc:VPointArrayDrawerHost
+            Width="300"
+            Height="200"
+            Background="LightCoral"
+            CircleBorderBrush="Red"
+            EdgeBorderBrush="Gray"
+            ReviewDiameter="20"
+            ReviewHeight="300"
+            ReviewWidth="400" />
         <!--<ToggleButton Style="{StaticResource KSwitchToggleButton}" IsEnabled="True"></ToggleButton>-->
     </Grid>
     <!--<Grid>
