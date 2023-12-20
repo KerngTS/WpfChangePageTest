@@ -27,6 +27,19 @@ namespace WpfChangePageTest
             InitializeComponent();
             DataContext = new WindowViewModel();
             var res = this.Resources;
+
+            //MainScrollViewer.ScrollChanged += (s, e) =>
+            //{
+            //    if(e.VerticalChange!=0)
+            //        LeftScrollViewer.ScrollToVerticalOffset(MainScrollViewer.VerticalOffset);
+            //    if (e.HorizontalChange != 0)
+            //        TitleScrollViewer.ScrollToHorizontalOffset(MainScrollViewer.HorizontalOffset);
+            //};
+            //LeftScrollViewer.ScrollChanged += (s, e) =>
+            //{
+            //    if (e.VerticalChange != 0)
+            //        MainScrollViewer.ScrollToVerticalOffset(LeftScrollViewer.VerticalOffset);
+            //};
             
         }
 

@@ -8,8 +8,8 @@
     </Style>
 
     <Style x:Key="KSwitchToggleButton" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="YellowGreen"/>
-        <Setter Property="Foreground" Value="#662424"/>
+        <Setter Property="Background" Value="YellowGreen" />
+        <Setter Property="Foreground" Value="#662424" />
         <Setter Property="Width" Value="34" />
         <Setter Property="Height" Value="15" />
         <Setter Property="BorderThickness" Value="1" />

@@ -54,6 +54,7 @@
     <Compile Include="KValidationRules\RegexValidationRule.cs" />
     <Compile Include="KVisualHostBase.cs" />
     <Compile Include="Styles\VisiColorKeys.cs" />
+    <Compile Include="Tools\PointTool.cs" />
     <Compile Include="VAnimationPath.cs" />
     <Compile Include="VDialog.cs" />
     <Compile Include="VDialogHost.cs" />
@@ -97,6 +98,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserControls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

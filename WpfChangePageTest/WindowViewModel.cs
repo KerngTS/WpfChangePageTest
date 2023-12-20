@@ -1,6 +1,7 @@
 ﻿using KEventAggregator;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,6 +63,20 @@ namespace WpfChangePageTest
             set { colorValues = value;RaisePropertyChange(); }
         }
 
+        private ObservableCollection<TestModel> _modelList;
+        public ObservableCollection<TestModel> ModelList
+        {
+            get { return _modelList; }
+            set { _modelList = value; RaisePropertyChange(); }
+        }
+
+        private IList<string> _dateStr;
+        public IList<string> DateStrs
+        {
+            get { return _dateStr; }
+            set { _dateStr = value; RaisePropertyChange(); }
+        }
+
         public KDelegateCommand Page01Command { get;private set; }
         public KDelegateCommand Page02Command { get;private set; }
 
@@ -83,6 +98,10 @@ namespace WpfChangePageTest
             ColorValues.Add(cfg.SbTextColor);
             ColorValues.Add(cfg.UiLinesColor);
             ColorValues.Add(cfg.SbBackgroundColor);
+
+            ModelList=new ObservableCollection<TestModel>(TestModel.GetDefaultModels());
+            //DateStrs=new List<string>();
+            DateStrs = ModelList[0].DateValues.Select(c=>c.Date.ToString("yyyy-MM-dd")).OrderBy(c=>c).ToList();
         }
 
         private void Dialog(object obj)
@@ -140,5 +159,100 @@ namespace WpfChangePageTest
         }
 
         private Dictionary<Type,UserControl> pages = new Dictionary<Type,UserControl>();
+    }
+
+    internal class TestModel:KNotifyPropertyBase
+    {
+        private string _itemNumber;
+        public string ItemNumber
+        {
+            get { return _itemNumber; }
+            set { _itemNumber = value; RaisePropertyChange(); }
+        }
+        private string _project;
+        public string Project
+        {
+            get { return _project; }
+            set { _project = value; RaisePropertyChange(); }
+        }
+        private string _process;
+        public string Process
+        {
+            get { return _process; }
+            set { _process = value; RaisePropertyChange(); }
+        }
+
+        private IList<DateValueModel> _dateValues;
+        public IList<DateValueModel> DateValues
+        {
+            get { return _dateValues; }
+            set { _dateValues = value; RaisePropertyChange(); }
+        }
+
+        public TestModel()
+        {
+            DateValues=new List<DateValueModel>();
+        }
+
+        public static List<TestModel> GetDefaultModels()
+        {
+            var rd = new Random();
+            var result = new List<TestModel>();
+            var projs = new[] {"R12D","C19","R4","H3B" };
+            var process = new[] { "SMT", "FATP", "PACKOUT" };
+            var startDate = DateTime.Now.Date;
+            var endDate = startDate.AddDays(14);
+            for (var i = 0;i<projs.Length;i++)
+            {
+                var proj = projs[i];
+                for (var j = 0;j<process.Length;j++)
+                {
+                    var pros = process[j];
+                    var itemNum = $"ITEM-{proj}-{pros}";
+                    var model = new TestModel()
+                    {
+                        ItemNumber = itemNum,
+                        Process = pros,
+                        Project = proj
+                    };
+                    var date = startDate.Date;
+                    while(date<endDate)
+                    {
+                        var dateValue = new DateValueModel
+                        {
+                            Date = date,
+                            InputQty = rd.Next(1500,2500),
+                            OutputQty = rd.Next(1000, 2000),
+                        };
+                        model.DateValues.Add(dateValue);
+                        date = date.AddDays(1);
+                    }
+                    result.Add(model);
+                }
+            }
+            return result;
+        }
+    }
+
+    internal class DateValueModel:KNotifyPropertyBase
+    {
+        private DateTime _date;
+        public DateTime Date
+        {
+            get { return _date; }
+            set { _date = value; RaisePropertyChange(); }
+        }
+        private double _inputQty;
+        public double InputQty
+        {
+            get { return _inputQty; }
+            set { _inputQty = value; RaisePropertyChange(); }
+        }
+        private double _outputQty;
+        public double OutputQty
+        {
+            get { return _outputQty; }
+            set { _outputQty = value; RaisePropertyChange(); }
+        }
     }
 }

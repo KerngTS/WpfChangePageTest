@@ -410,9 +410,9 @@
     </Style>
 
     <Style TargetType="{x:Type local:KFloatingTextBox}">
-        <Setter Property="BorderBrush" Value="Red"/>
-        <Setter Property="Background" Value="AliceBlue"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="BorderBrush" Value="Red" />
+        <Setter Property="Background" Value="AliceBlue" />
+        <Setter Property="Foreground" Value="Black" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:KFloatingTextBox}">
@@ -432,10 +432,10 @@
                             <TextBlock
                                 x:Name="FloatingEle"
                                 Grid.Row="1"
-                                Background="Transparent"
-                                Foreground="Black"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                Background="Transparent"
+                                Foreground="Black"
                                 Text="imya" />
                             <ScrollViewer
                                 x:Name="PART_ContentHost"
@@ -505,11 +505,11 @@
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.Focus.Border}" />
                         </Trigger>-->
                         <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter Property="Background" Value="Green"/>
-                            <Setter Property="Grid.Row" Value="0"/>
+                            <Setter Property="Background" Value="Green" />
+                            <Setter Property="Grid.Row" Value="0" />
                         </Trigger>
                         <Trigger Property="Text" Value="">
-                            <Setter Property="Grid.Row" Value="0"/>
+                            <Setter Property="Grid.Row" Value="0" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

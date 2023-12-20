@@ -29,6 +29,21 @@
                 <Setter Property="Height" Value="30" />
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
             </Style>
+            <Style x:Key="FocusedTextBoxStyle" TargetType="TextBox">
+                <Style.Triggers>
+                    <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                        <Setter Property="BorderThickness" Value="0,0,0,1" />
+                        <Setter Property="BorderBrush" Value="Green" />
+                        <Setter Property="Background" Value="White" />
+                    </Trigger>
+
+                    <Trigger Property="IsKeyboardFocusWithin" Value="False">
+                        <Setter Property="BorderThickness" Value="0,0,0,0" />
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="Background" Value="Transparent" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
             <!--<Style TargetType="DataGridCell">
                 <Style.Triggers>
                     <Trigger Property="IsSelected" Value="True">
@@ -43,6 +58,8 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>-->
+
+            
 
             <Style x:Key="GridStyle" TargetType="DataGrid">
                 <Setter Property="BorderBrush" Value="Gray" />
@@ -134,7 +151,16 @@
         </ResourceDictionary>
 
     </cc:VWindow.Resources>
-    <Grid>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <!--<TextBox Style="{StaticResource FocusedTextBoxStyle}" Height="30" Width="200"/>-->
         <!--<cc:VVisualHost Width="400" Height="400"  Background="LightGray"/>-->
         <cc:VPointArrayDrawerHost
             Width="300"
@@ -143,9 +169,11 @@
             CircleBorderBrush="Red"
             EdgeBorderBrush="Gray"
             ReviewDiameter="20"
-            ReviewHeight="300"
-            ReviewWidth="400" />
+            ReviewHeight="100"
+            ReviewWidth="300" />
         <!--<ToggleButton Style="{StaticResource KSwitchToggleButton}" IsEnabled="True"></ToggleButton>-->
+
+      
     </Grid>
     <!--<Grid>
         <Grid.RowDefinitions>
