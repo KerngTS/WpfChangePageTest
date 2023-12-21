@@ -26,6 +26,29 @@ namespace WpfCustomControlLibrary1
         #region 依賴屬性
 
 
+
+        public double FontSize
+        {
+            get { return (double)GetValue(FontSizeProperty); }
+            set { SetValue(FontSizeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for FontSize.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FontSizeProperty =
+            DependencyProperty.Register("FontSize", typeof(double), typeof(VPointArrayDrawerHost),
+                 new FrameworkPropertyMetadata(10.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(HostCallBack)));
+
+        public double ArrowSize
+        {
+            get { return (double)GetValue(ArrowSizeProperty); }
+            set { SetValue(ArrowSizeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for FontSize.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ArrowSizeProperty =
+            DependencyProperty.Register("ArrowSize", typeof(double), typeof(VPointArrayDrawerHost),
+                 new FrameworkPropertyMetadata(5.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(HostCallBack)));
+
         public double ReviewWidth
         {
             get { return (double)GetValue(ReviewWidthProperty); }
@@ -165,7 +188,8 @@ namespace WpfCustomControlLibrary1
                     dc.DrawEllipse(null, new Pen(CircleBorderBrush, 1.0), center, mScale * ReviewDiameter / 2.0, mScale * ReviewDiameter / 2.0);
                 }
                 //DrawDimension(dc, p1, ConvertToPixel(new Point(halfWidth, 0.0 - halfHeight)), ConvertToPixel( new Point(0, 0.0 - halfHeight)), "DIMENSION");
-                DrawDimension(dc, new Point(0.0 - halfWidth, 0.0 - halfHeight), new Point(0,0), new Point(0.0 - halfWidth/2.0, 0.0 - halfHeight-20), "DIMENSION",0);
+                DrawDimension(dc, new Point(0.0 - halfWidth, 0.0 - halfHeight), new Point(0,0), new Point(0.0 - halfWidth/2.0, 0.0 - halfHeight-30), "HDIMENSION",0);
+                DrawDimension(dc, new Point(0.0 - halfWidth, 0.0 - halfHeight), new Point(0,0), new Point(0.0 + halfWidth+30, 0.0 - halfHeight/2.0), "VDIMENSION",1);
                 dc.Close();
                 // 显示图形
                 InvalidateVisual();
@@ -180,8 +204,8 @@ namespace WpfCustomControlLibrary1
 
         public void DrawDimension(DrawingContext dc, Point p1,Point p2,Point txtPoint,string dimTxt)
         {
-            double fontSize = 10.0;
-            var arrowSize = fontSize * 0.8 ;
+            double fontSize = FontSize;
+            var arrowSize = ArrowSize ;
             var arrowLen = arrowSize / 2.0 / (Math.Tan(Math.PI / 12.0));
             var text = new FormattedText(dimTxt, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), fontSize, Brushes.Black, VisualTreeHelper.GetDpi(this).PixelsPerDip);
             var midPoint = new Point((p1.X + p2.X) / 2.0, (p1.Y + p2.Y) / 2.0);
@@ -221,13 +245,14 @@ namespace WpfCustomControlLibrary1
         public void DrawDimension(DrawingContext dc, Point p1, Point p2, Point txtPoint, string dimTxt,short xy)
         {
             if(xy==0) DrawXDimension(dc,p1,p2,txtPoint,dimTxt);
+            else if(xy==1) DrawYDimension(dc,p1,p2,txtPoint,dimTxt);
         }
 
         public void DrawXDimension(DrawingContext dc, Point p1, Point p2, Point txtPoint, string dimTxt)
         {
-            double fontSize = 10.0;
-            var arrowSize = fontSize * 0.8 *mScale;
-            var arrowLen = arrowSize / 2.0 / (Math.Tan(Math.PI / 12.0))*mScale;
+            double fontSize = FontSize;
+            var arrowSize = ArrowSize;
+            var arrowLen = arrowSize / 2.0 / (Math.Tan(Math.PI / 12.0));
             var text = new FormattedText(dimTxt, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), fontSize, Brushes.Black, VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
             //計算標點到文字放置點的距離
@@ -255,17 +280,69 @@ namespace WpfCustomControlLibrary1
 
             var rgtUpArrayPt = new Point(dimP2.X - arrowLen, dimP2.Y + arrowSize / 2.0);
             var rgtBtmArrayPt = new Point(dimP2.X - arrowLen, dimP2.Y - arrowSize / 2.0);
-            dc.DrawLine(pen, ConvertToPixel(dimP1), ConvertToPixel(lftUpArrayPt));
-            dc.DrawLine(pen, ConvertToPixel(dimP1), ConvertToPixel(lftBtmArrayPt));
-            dc.DrawLine(pen, ConvertToPixel(dimP2), ConvertToPixel(rgtUpArrayPt));
-            dc.DrawLine(pen, ConvertToPixel(dimP2), ConvertToPixel(rgtBtmArrayPt));
+
+            var pixelDimP1 = ConvertToPixel(dimP1);
+            var pixelDimP2 = ConvertToPixel(dimP2);
+            dc.DrawLine(pen, pixelDimP1, new Point(pixelDimP1.X + arrowLen, pixelDimP1.Y + arrowSize / 2.0));
+            dc.DrawLine(pen, pixelDimP1, new Point(pixelDimP1.X + arrowLen, pixelDimP1.Y - arrowSize / 2.0));
+            dc.DrawLine(pen, pixelDimP2, new Point(pixelDimP2.X - arrowLen, pixelDimP2.Y + arrowSize / 2.0));
+            dc.DrawLine(pen, pixelDimP2, new Point(pixelDimP2.X - arrowLen, pixelDimP2.Y - arrowSize / 2.0));
 
             //文字
             var txtLoc = ConvertToPixel(txtPoint);
 
             //dc.DrawEllipse(null,pen,ConvertToPixel(txtLoc),3,3);
-            dc.DrawText(text, new Point(txtLoc.X-text.Width/2.0*mScale,txtLoc.Y-(text.Height*1.1)));
+            var txtLen = text.Width ;
+            var txtWid = text.Height;
+            dc.DrawText(text, new Point(txtLoc.X-txtLen/2.0,txtLoc.Y-(txtWid * 1.1)));
 
+        }
+
+        public void DrawYDimension(DrawingContext dc, Point p1, Point p2, Point txtPoint, string dimTxt)
+        {
+            double fontSize = FontSize;
+            var arrowSize = ArrowSize;
+            var arrowLen = arrowSize / 2.0 / (Math.Tan(Math.PI / 12.0));
+            var text = new FormattedText(dimTxt, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), fontSize, Brushes.Black, VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+            //計算標點到文字放置點的距離
+            var xv = new Vector(1, 0);
+            var yv = new Vector(0, 1);
+            var dist2 = p2.DistTo(txtPoint, xv);
+            var dist1 = p1.DistTo(txtPoint, xv);
+
+            var pen = new Pen(new SolidColorBrush(Colors.Black), 0.5);
+            //標注點
+            var dimP1 = p1.Move(xv, dist1);
+            var dimP2 = p2.Move(xv, dist2);
+
+            //引線
+            var leader1EndPoint = p1.Move(xv, dist1 + (dist1 >= 0 ? 5 : -5));
+            var leader2EndPoint = p2.Move(xv, dist2 + (dist2 >= 0 ? 5 : -5));
+            dc.DrawLine(pen, ConvertToPixel(p1), ConvertToPixel(leader1EndPoint));
+            dc.DrawLine(pen, ConvertToPixel(p2), ConvertToPixel(leader2EndPoint));
+
+            //尺寸線與箭頭
+            dc.DrawLine(pen, ConvertToPixel(dimP1), ConvertToPixel(dimP2));
+
+            
+
+            var pixelDimP1 = ConvertToPixel(dimP1);
+            var pixelDimP2 = ConvertToPixel(dimP2);
+            dc.DrawLine(pen, pixelDimP1, new Point(pixelDimP1.X + arrowSize / 2.0, pixelDimP1.Y - arrowLen));
+            dc.DrawLine(pen, pixelDimP1, new Point(pixelDimP1.X - arrowSize / 2.0, pixelDimP1.Y - arrowLen));
+            dc.DrawLine(pen, pixelDimP2, new Point(pixelDimP2.X + arrowSize / 2.0, pixelDimP2.Y + arrowLen));
+            dc.DrawLine(pen, pixelDimP2, new Point(pixelDimP2.X - arrowSize / 2.0, pixelDimP2.Y + arrowLen));
+
+            //文字
+            var txtLoc = ConvertToPixel(txtPoint);
+
+            //dc.DrawEllipse(null,pen,ConvertToPixel(txtLoc),3,3);
+            var txtLen = text.Width;
+            var txtWid = text.Height;
+            dc.PushTransform(new RotateTransform(270, txtLoc.X , txtLoc.Y ));
+            dc.DrawText(text, new Point(txtLoc.X - txtLen / 2.0, txtLoc.Y - (txtWid * 1.1)));
+            dc.Pop();
         }
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
