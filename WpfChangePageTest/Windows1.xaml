@@ -162,8 +162,8 @@
             CircleBorderBrush="Red"
             EdgeBorderBrush="Gray"
             ReviewDiameter="20"
-            ReviewHeight="300"
-            ReviewWidth="400" />
+            ReviewHeight="250"
+            ReviewWidth="200" />
         <!--<ToggleButton Style="{StaticResource KSwitchToggleButton}" IsEnabled="True"></ToggleButton>-->
 
       
