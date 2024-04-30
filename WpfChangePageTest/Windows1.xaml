@@ -273,14 +273,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
     -->
-    <!--<cc:VAnimationPath
-                    Data="M 0 0 L 80 0 Q 80 0 80 0 L 80 120 Q 80 120 80 120 L 190 0 Q 190 0 190 0 L 300 0 Q 300 0 300 0 L 140 160 Q 140 160 140 160 L 300 290 Q 300 290 300 290 L 170 290 Q 170 290 170 290 L 80 200 Q 80 200 80 200 L 80 290 Q 80 290 80 290 L 0 290 Q 0 290 0 290 L 0 0"
-                    IsPlaying="False"
-                    PathLength="0"
-                    Stretch="Uniform"
-                    Stroke="Blue"
-                    StrokeThickness="6"
-                    Duration="00:00:05" />-->
+    
     <!--
                 <StackPanel Width="200" Orientation="Horizontal">
                     <Button
