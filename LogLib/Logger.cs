@@ -7,6 +7,7 @@ namespace LogLib
     public class Logger
     {
         private static readonly object _lock = new object();
+        private static volatile Logger _instance;
         private readonly string _logDirectory;
         private readonly LogLevel _minimumLevel;
         private readonly long _maxFileSize; // 以字节为单位
@@ -21,26 +22,52 @@ namespace LogLib
             Fatal = 4
         }
 
-        /// <summary>
-        /// 初始化日志记录器
-        /// </summary>
-        /// <param name="logDirectory">日志目录</param>
-        /// <param name="maxFileSizeInMB">单个日志文件最大大小(MB)</param>
-        /// <param name="minimumLevel">最小日志级别</param>
-        public Logger(string logDirectory, int maxFileSizeInMB = 10, LogLevel minimumLevel = LogLevel.Info)
+        private Logger(string logDirectory, int maxFileSizeInMB = 10, LogLevel minimumLevel = LogLevel.Info)
         {
             _logDirectory = logDirectory;
             _minimumLevel = minimumLevel;
-            _maxFileSize = maxFileSizeInMB * 1024 * 1024; // 转换为字节
+            _maxFileSize = maxFileSizeInMB * 1024 * 1024;
 
-            // 确保日志目录存在
             if (!Directory.Exists(_logDirectory))
             {
                 Directory.CreateDirectory(_logDirectory);
             }
 
-            // 初始化当前日志文件路径
             UpdateLogFile();
+        }
+
+        /// <summary>
+        /// 初始化日志实例
+        /// </summary>
+        public static void Initialize(string logDirectory, int maxFileSizeInMB = 10, LogLevel minimumLevel = LogLevel.Info)
+        {
+            if (_instance != null)
+            {
+                throw new InvalidOperationException("Logger已经初始化过了");
+            }
+
+            lock (_lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = new Logger(logDirectory, maxFileSizeInMB, minimumLevel);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取日志实例
+        /// </summary>
+        public static Logger Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    throw new InvalidOperationException("Logger尚未初始化，请先调用Initialize方法");
+                }
+                return _instance;
+            }
         }
 
         private void UpdateLogFile()

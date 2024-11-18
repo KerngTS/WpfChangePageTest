@@ -17,16 +17,20 @@ namespace Test
         [STAThread]
         static void Main(string[] args)
         {
-            // 创建日志实例，设置日志目录和单个文件最大大小(MB)
-            var logger = new Logger("logs", 10, Logger.LogLevel.Debug);
+            // 初始化
+            Logger.Initialize("logs", 10, Logger.LogLevel.Debug);
 
-            // 记录日志
-            logger.Info("系统启动");
+            // 使用静态类方法记录日志
+            Log.Info("程序启动");
+            Log.Debug("调试信息");
 
-            // 模拟写入大量日志
-            for (int i = 0; i < 1000; i++)
+            try
             {
-                logger.Debug($"测试日志 {i}");
+                throw new Exception("测试异常");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("发生错误", ex);
             }
             return;
             KEventAggregator.KEventAggregator1.Instance.Subscribe<TestEvent>(arg => Console.WriteLine($"HasFilter:{DateTime.Now:yyyy-MM-dd hh:mm:ss} {arg.Message}"),f=>f.Filter=="ROOT") ;
