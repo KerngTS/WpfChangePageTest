@@ -13,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace WpfDoubleAnimation
 {
@@ -25,6 +26,41 @@ namespace WpfDoubleAnimation
         {
             InitializeComponent();
             //AddDoubleAnimation();
+            for (int i = 0; i < 100; i++)
+            {
+                lbItems.Items.Add("Item " + i);
+            }
+            // 创建一个DispatcherTimer对象
+            DispatcherTimer timer = new DispatcherTimer();
+
+            // 设置时间间隔为100毫秒
+            timer.Interval = TimeSpan.FromMilliseconds(100);
+
+            // 为DispatcherTimer添加Tick事件处理程序
+            timer.Tick += (s, e) =>
+            {
+                // 获取当前选中项的索引
+                int index = lbItems.SelectedIndex;
+
+                // 判断是否已经滚动到最后一个项目
+                if (index == lbItems.Items.Count - 1)
+                {
+                    // 重新选中第一个项目
+                    lbItems.SelectedIndex = 0;
+                }
+                else
+                {
+                    // 选中下一个项目
+                    lbItems.SelectedIndex = index + 1;
+                }
+
+                // 将选中项滚动到视图中
+                lbItems.ScrollIntoView(lbItems.SelectedItem);
+            };
+
+            // 启动DispatcherTimer
+            timer.Start();
+
         }
 
         //代碼的方式實現動畫

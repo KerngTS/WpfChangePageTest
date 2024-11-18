@@ -1,4 +1,5 @@
 ﻿using KEventAggregator;
+using LogLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,18 @@ namespace Test
         [STAThread]
         static void Main(string[] args)
         {
+            // 创建日志实例，设置日志目录和单个文件最大大小(MB)
+            var logger = new Logger("logs", 10, Logger.LogLevel.Debug);
+
+            // 记录日志
+            logger.Info("系统启动");
+
+            // 模拟写入大量日志
+            for (int i = 0; i < 1000; i++)
+            {
+                logger.Debug($"测试日志 {i}");
+            }
+            return;
             KEventAggregator.KEventAggregator1.Instance.Subscribe<TestEvent>(arg => Console.WriteLine($"HasFilter:{DateTime.Now:yyyy-MM-dd hh:mm:ss} {arg.Message}"),f=>f.Filter=="ROOT") ;
             var token = KEventAggregator.KEventAggregator1.Instance.Subscribe<TestEvent>(arg => Console.WriteLine($"NoFilter:{DateTime.Now:yyyy-MM-dd hh:mm:ss} {arg.Message}")) ;
             KEventAggregator.KEventAggregator1.Instance.UnSubscribe<TestEvent>(token);

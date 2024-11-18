@@ -57,6 +57,10 @@
       <Project>{9cad9244-f5fb-4f16-a3df-9f876284f771}</Project>
       <Name>KEventAggregator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LogLib\LogLib.csproj">
+      <Project>{2239942c-7e28-4d98-8df9-0dba6b5a7abf}</Project>
+      <Name>LogLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WpfChangePageTest\WpfChangePageTest.csproj">
       <Project>{5afae9dd-49dc-4d78-b0b3-4835666aa91a}</Project>
       <Name>WpfChangePageTest</Name>
